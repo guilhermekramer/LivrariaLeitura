@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.livraria.domain.Cliente;
 import com.example.livraria.service.ClienteService;
 
-import java.util.Collections;
+
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -17,6 +17,8 @@ public class ClienteController {
 
     ClienteService service;
     ModelMapper mapper;
+
+
 
     public ClienteController(ClienteService service, ModelMapper mapper) {
         this.service = service;
@@ -55,8 +57,8 @@ public class ClienteController {
         return response;
     }
     @PutMapping("{id}")
-    public Cliente update(@RequestBody Cliente p, @PathVariable Long id){
-        return this.service.update(p, id);
+    public Cliente update(@RequestBody Cliente c, @PathVariable Long id){
+        return this.service.update(c, id);
     }
 
     @DeleteMapping("{id}")

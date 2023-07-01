@@ -1,5 +1,6 @@
 package com.example.livraria.domain;
 
+import com.example.livraria.controller.ClienteController;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
+import com.example.livraria.domain.Endereco;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -21,43 +24,44 @@ public class Cliente extends AbstractEntity{
     Integer idade;
     String cpf;
     String email;
-    Endereco endereco;
     Boolean admin = false;
 
 
+
+    //Classe Que manipula o objeto DTORequest
+    //Método que converte DTO em Cliente
     @Data
     public static class DtoRequest {
-        @NotBlank(message = "Usuário com nome em branco")
         String nome;
         String cpf;
-        @Email (message = "Email")
         String email;
         Integer idade;
-        Endereco endereco;
-        Boolean admin = false;
-
-
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
         }
 
     }
 
-    public static class DtoResponse {
+
+    //Classe Que manipula o objeto DTOResponse
+    //Método que converte Cliente em DTO
+    @Data
+    public static class DtoResponse extends RepresentationModel<DtoResponse> {
         String nome;
-        String email;
         Integer idade;
+        String cpf;
+        String email;
+
 
         public static DtoResponse convertToDto(Cliente c, ModelMapper mapper){
             return mapper.map(c, DtoResponse.class);
         }
 
 
-
         public void generateLinks(Long id){
-            add(linkTo(Cliente.class).slash(id).withSelfRel());  //parei aqui, acho que precisa implementar controller e serviços antes de prosseguir
-            add(linkTo(Cliente.class).withRel("cliente"));
-            add(linkTo(Cliente.class).slash(id).withRel("delete"));
+            add(linkTo(ClienteController.class).slash(id).withSelfRel());
+            add(linkTo(ClienteController.class).withRel("cliente"));
+            add(linkTo(ClienteController.class).slash(id).withRel("delete"));
         }
     }
 

@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.livraria.domain.Livro;
 import com.example.livraria.service.LivroService;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/livro")
 public class LivroController {
@@ -23,7 +26,7 @@ public class LivroController {
         Livro livro = this.service.create(Livro.DtoRequest.convertToEntity(p, mapper));
 
         Livro.DtoResponse response = Livro.DtoResponse.convertToDto(livro, mapper);
-        response.generateLinks(Livro.getId());
+        response.generateLinks(livro.getId());
 
         return response;
     }
@@ -41,16 +44,14 @@ public class LivroController {
 
     @GetMapping("{id}")
     public Livro.DtoResponse getById(@PathVariable Long id){
-
         Livro livro = this.service.getById(id);
         Livro.DtoResponse response = Livro.DtoResponse.convertToDto(livro, mapper);
-        response.generateLinks(Livro.getId());
-
+        response.generateLinks(livro.getId());
         return response;
     }
     @PutMapping("{id}")
-    public Livro update(@RequestBody Livro p, @PathVariable Long id){
-        return this.service.update(p, id);
+    public Livro update(@RequestBody Livro l, @PathVariable Long id){
+        return this.service.update(l, id);
     }
 
     @DeleteMapping("{id}")
