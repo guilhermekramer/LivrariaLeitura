@@ -49,7 +49,6 @@ public class ClienteController {
 
     @GetMapping("{id}")
     public Cliente.DtoResponse getById(@PathVariable Long id){
-
         Cliente cliente = this.service.getById(id);
         Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(cliente, mapper);
         response.generateLinks(cliente.getId());

@@ -4,13 +4,14 @@ import com.example.livraria.controller.ClienteController;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
-import com.example.livraria.domain.Endereco;
+
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -36,6 +37,7 @@ public class Cliente extends AbstractEntity{
         String cpf;
         String email;
         Integer idade;
+        //Endereco endereco;
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
         }
@@ -47,9 +49,14 @@ public class Cliente extends AbstractEntity{
     //Método que converte Cliente em DTO
     @Data
     public static class DtoResponse extends RepresentationModel<DtoResponse> {
+
+        @NotBlank(message = "É necessário inserir um nome para o Cliente")
         String nome;
+        @NotNull(message = "É necessário inserir uma idade para o Cliente")
         Integer idade;
+        @NotBlank(message = "É necessário inserir um cpf para o Cliente")
         String cpf;
+        @Email
         String email;
 
 

@@ -1,6 +1,7 @@
 package com.example.livraria.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,9 +21,11 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Long id; // MUDAR PARA UUID
     LocalDateTime horaDeletado;
+
     LocalDateTime horaCriado;
     LocalDateTime horaAtualizado;
+
 
 }

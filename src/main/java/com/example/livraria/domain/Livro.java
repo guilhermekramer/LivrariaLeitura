@@ -20,9 +20,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Livro extends AbstractEntity {
+
+    @NotBlank(message = "É necessário inserir um nome para o Livro")
     String nome;
+    @NotBlank(message = "É necessário inserir um autor para o Livro")
     String autor;
     Integer anoCriacao;
+    @NotNull(message = "É necessário inserir um valor para o Livro")
     Integer valor;
     String genero;
 
