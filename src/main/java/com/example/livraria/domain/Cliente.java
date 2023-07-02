@@ -21,23 +21,28 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente extends AbstractEntity{
+
     String nome;
     Integer idade;
     String cpf;
     String email;
     Boolean admin = false;
-
+    Endereco endereco;
 
 
     //Classe Que manipula o objeto DTORequest
     //Método que converte DTO em Cliente
     @Data
     public static class DtoRequest {
+        @NotBlank(message = "É necessário inserir um nome para o Cliente")
         String nome;
-        String cpf;
-        String email;
+        @NotNull(message = "É necessário inserir uma idade para o Cliente")
         Integer idade;
-        //Endereco endereco;
+        @NotBlank(message = "É necessário inserir um cpf para o Cliente")
+        String cpf;
+        @Email
+        String email;
+        Endereco endereco;
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
         }
@@ -50,14 +55,11 @@ public class Cliente extends AbstractEntity{
     @Data
     public static class DtoResponse extends RepresentationModel<DtoResponse> {
 
-        @NotBlank(message = "É necessário inserir um nome para o Cliente")
         String nome;
-        @NotNull(message = "É necessário inserir uma idade para o Cliente")
         Integer idade;
-        @NotBlank(message = "É necessário inserir um cpf para o Cliente")
         String cpf;
-        @Email
         String email;
+        Endereco endereco;
 
 
         public static DtoResponse convertToDto(Cliente c, ModelMapper mapper){
