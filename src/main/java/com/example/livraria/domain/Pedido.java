@@ -30,5 +30,5 @@ public class Pedido extends AbstractEntity {
         }
     }
 
-    public class DtoResponse
+    //public class DtoResponse;
 }
