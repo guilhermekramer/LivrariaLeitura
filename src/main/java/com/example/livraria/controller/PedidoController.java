@@ -17,7 +17,7 @@ public class PedidoController {
 
 
     @PostMapping()
-    public createPedido(Pedido pedido){
+    public createPedido(Cliente.DtoRe){
         service.create(pedido);
     }
 }

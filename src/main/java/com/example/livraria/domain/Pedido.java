@@ -20,15 +20,25 @@ public class Pedido extends AbstractEntity {
     Cliente cliente;
 
 
+    @Data
     public class DtoRequest{
 
         Livro livro;
         Cliente cliente;
 
-        public static Pedido convertToPedido(DtoRequest dto, ModelMapper mapper ){
+        public static Pedido convertToEntityPedido(DtoRequest dto, ModelMapper mapper ){
             return mapper.map(dto, Pedido.class);
         }
     }
 
-    //public class DtoResponse;
+    @Data
+    public class DtoResponse {
+        Livro livro;
+        Cliente cliente;
+
+        public static DtoResponse convertToDtoPedido(Pedido pedido, ModelMapper mapper){
+            return mapper.map(pedido, DtoResponse.class);
+
+        }
+    }
 }
