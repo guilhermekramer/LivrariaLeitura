@@ -2,6 +2,9 @@ package com.example.livraria.domain;
 
 import com.example.livraria.controller.ClienteController;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
 
+import java.io.Serializable;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,13 +25,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente extends AbstractEntity{
+@Table(name = "cliente")
+public class Cliente extends AbstractEntity implements Serializable {
 
     String nome;
     Integer idade;
     String cpf;
     String email;
     Boolean admin = false;
+    @OneToOne
+    @JoinColumn(name = "endereco_id" )
     Endereco endereco;
 
 
@@ -43,6 +51,7 @@ public class Cliente extends AbstractEntity{
         @Email
         String email;
         Endereco endereco;
+
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
         }

@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id; // MUDAR PARA UUID
+    Long id;
     LocalDateTime horaDeletado;
 
     LocalDateTime horaCriado;

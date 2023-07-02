@@ -15,9 +15,4 @@ public class PedidoController {
     PedidoService service;
     PedidoRepository repository;
 
-
-    @PostMapping()
-    public createPedido(Cliente.DtoRe){
-        service.create(pedido);
-    }
 }
