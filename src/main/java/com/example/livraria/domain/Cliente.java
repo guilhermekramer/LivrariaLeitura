@@ -34,7 +34,7 @@ public class Cliente extends AbstractEntity implements Serializable {
     String email;
     Boolean admin = false;
     @OneToOne
-    @JoinColumn(name = "endereco_id" )
+    @JoinColumn(name = "fk_endereco")
     Endereco endereco;
 
 

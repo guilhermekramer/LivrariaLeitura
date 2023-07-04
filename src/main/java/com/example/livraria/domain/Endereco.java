@@ -17,10 +17,10 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="enderecos")
+@Table(name="endereco")
 public class Endereco extends AbstractEntity implements Serializable {
 
     String rua;
-    @OneToOne(mappedBy = "endereco")
+    @OneToOne(mappedBy = "cliente")
     Cliente cliente;
 }
