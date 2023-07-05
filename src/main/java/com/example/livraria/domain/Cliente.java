@@ -1,10 +1,7 @@
 package com.example.livraria.domain;
 
 import com.example.livraria.controller.ClienteController;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +14,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -28,6 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Table(name = "cliente")
 public class Cliente extends AbstractEntity implements Serializable {
 
+
     String nome;
     Integer idade;
     String cpf;
@@ -36,10 +35,14 @@ public class Cliente extends AbstractEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "fk_endereco")
     Endereco endereco;
+    @OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true)
+    List<Pedido> pedidos;
+
 
 
     //Classe Que manipula o objeto DTORequest
     //Método que converte DTO em Cliente
+
     @Data
     public static class DtoRequest {
         @NotBlank(message = "É necessário inserir um nome para o Cliente")
@@ -51,6 +54,9 @@ public class Cliente extends AbstractEntity implements Serializable {
         @Email
         String email;
         Endereco endereco;
+        List<Pedido> pedidos;
+
+
 
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
@@ -61,6 +67,7 @@ public class Cliente extends AbstractEntity implements Serializable {
 
     //Classe Que manipula o objeto DTOResponse
     //Método que converte Cliente em DTO
+
     @Data
     public static class DtoResponse extends RepresentationModel<DtoResponse> {
 
@@ -69,6 +76,7 @@ public class Cliente extends AbstractEntity implements Serializable {
         String cpf;
         String email;
         Endereco endereco;
+        List<Pedido> pedidos;
 
 
         public static DtoResponse convertToDto(Cliente c, ModelMapper mapper){

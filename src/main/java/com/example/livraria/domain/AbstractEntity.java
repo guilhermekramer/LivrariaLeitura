@@ -2,10 +2,7 @@ package com.example.livraria.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +19,9 @@ public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    LocalDateTime horaDeletado;
-
-    LocalDateTime horaCriado;
-    LocalDateTime horaAtualizado;
+    LocalDateTime deletedAt;
+    LocalDateTime createdAt;
+    LocalDateTime atualizadoAt;
 
 
 }

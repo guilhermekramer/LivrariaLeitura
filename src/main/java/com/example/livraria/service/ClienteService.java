@@ -15,7 +15,7 @@ public class ClienteService extends GenericService<Cliente, ClienteRepository>  
 
     @Override
     public Cliente create(Cliente cliente) {
-        cliente.setHoraCriado(LocalDateTime.now());
+        cliente.setCreatedAt(LocalDateTime.now());
         return super.create(cliente);
     }
 }

@@ -2,6 +2,8 @@ package com.example.livraria.domain;
 
 import com.example.livraria.controller.LivroController;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,27 +21,26 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Livro extends AbstractEntity {
-
-    @NotBlank(message = "É necessário inserir um nome para o Livro")
     String nome;
-    @NotBlank(message = "É necessário inserir um autor para o Livro")
     String autor;
     Integer anoCriacao;
-    @NotNull(message = "É necessário inserir um valor para o Livro")
     Integer valor;
     String genero;
-
 
 
     //Classe que manipula o DTO Request
     //Método que converte DTO em Livro
     @Data
     public static class DtoRequest {
+        @NotBlank(message = "É necessário inserir um nome para o Livro")
         String nome;
+        @NotBlank(message = "É necessário inserir um autor para o Livro")
         String autor;
         Integer anoCriacao;
+        @NotNull(message = "É necessário inserir um valor para o Livro")
         Integer valor;
         String genero;
+
 
         public static Livro convertToEntity (DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Livro.class );
