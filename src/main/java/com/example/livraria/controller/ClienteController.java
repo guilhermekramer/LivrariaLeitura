@@ -18,8 +18,6 @@ public class ClienteController {
     ClienteService service;
     ModelMapper mapper;
 
-
-
     public ClienteController(ClienteService service, ModelMapper mapper) {
         this.service = service;
         this.mapper = mapper;
