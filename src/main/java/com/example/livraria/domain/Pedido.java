@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
 
 import java.util.List;
@@ -42,12 +43,12 @@ public class Pedido extends AbstractEntity {
         }
     }
     @Data
-    public class DtoResponse {
+    public class DtoResponse extends RepresentationModel<Pedido.DtoResponse>{
         List<Livro> livros;
         Cliente cliente;
 
-        public static DtoResponse convertToDto(Pedido pedido, ModelMapper mapper){
-            return mapper.map(pedido, DtoResponse.class);
+        public static DtoResponse convertToDto(Pedido p, ModelMapper mapper){
+            return mapper.map(p, DtoResponse.class);
 
         }
 
