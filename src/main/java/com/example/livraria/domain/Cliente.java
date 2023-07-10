@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -24,6 +26,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cliente")
+@SQLDelete(sql = "UPDATE cliente SET deleted_At = CURRENT_TIMESTAMP WHERE id=?")
+@Where(clause = "deleted_at is null")
 public class Cliente extends AbstractEntity implements Serializable {
 
 
@@ -78,11 +82,9 @@ public class Cliente extends AbstractEntity implements Serializable {
         Endereco endereco;
         List<Pedido> pedidos;
 
-
         public static DtoResponse convertToDto(Cliente c, ModelMapper mapper){
             return mapper.map(c, DtoResponse.class);
         }
-
 
         public void generateLinks(Long id){
             add(linkTo(ClienteController.class).slash(id).withSelfRel());

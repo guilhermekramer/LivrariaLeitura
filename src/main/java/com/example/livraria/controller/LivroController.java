@@ -1,5 +1,6 @@
 package com.example.livraria.controller;
 
+import com.example.livraria.domain.Cliente;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,17 @@ public class LivroController {
         return response;
     }
 
+//    @GetMapping
+//    public List<Livro.DtoResponse> list(){
+//        return this.service.list().stream().map(
+//                elementoAtual -> {
+//                    Livro.DtoResponse response = Livro.DtoResponse.convertToDto(elementoAtual, mapper);
+//                    response.generateLinks(elementoAtual.getId());
+//                    return response;
+//                }).toList();
+//    }
     @GetMapping
     public List<Livro.DtoResponse> list(){
-
         return this.service.list().stream().map(
                 elementoAtual -> {
                     Livro.DtoResponse response = Livro.DtoResponse.convertToDto(elementoAtual, mapper);
@@ -49,6 +58,8 @@ public class LivroController {
         response.generateLinks(livro.getId());
         return response;
     }
+
+
     @PutMapping("{id}")
     public Livro update(@RequestBody Livro l, @PathVariable Long id){
         return this.service.update(l, id);

@@ -1,5 +1,6 @@
 package com.example.livraria.service;
 
+import com.example.livraria.domain.Endereco;
 import org.springframework.stereotype.Service;
 import com.example.livraria.domain.Cliente;
 import com.example.livraria.repository.ClienteRepository;

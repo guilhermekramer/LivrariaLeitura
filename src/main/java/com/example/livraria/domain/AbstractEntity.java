@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @RequiredArgsConstructor
 @Data
-
 public abstract class AbstractEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -24,4 +22,6 @@ public abstract class AbstractEntity {
     LocalDateTime atualizadoAt;
 
 
+    public <E extends AbstractEntity> void partialUpdate(E updatedEntity) {
+    }
 }

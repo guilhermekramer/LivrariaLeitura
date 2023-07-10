@@ -6,19 +6,29 @@ import com.example.livraria.repository.IGenericRepository;
 
 import java.util.List;
 import java.util.Optional;
-public abstract class GenericService<E extends AbstractEntity, R extends IGenericRepository>
-implements IGenericService<E>{
+public abstract class GenericService<E extends AbstractEntity, R extends IGenericRepository> implements IGenericService<E>{
 
     R repository;
+
     public GenericService(R repository) {
         this.repository = repository;
     }
 
+//    @Override
+//    public E getById(Long id) {
+//        Optional<E> clienteBanco = repository.findById(id);
+//        if (clienteBanco.isPresent()){
+//            return clienteBanco.get();
+//        }else{
+//            throw new EntityNotFoundException();
+//        }
+//    }
+
     @Override
     public E getById(Long id) {
-        Optional<E> clienteBanco = repository.findById(id);
-        if (clienteBanco.isPresent()){
-            return (E) clienteBanco.get();
+        Optional<E> entityBanco = repository.findById(id);
+        if (entityBanco.isPresent()){
+            return (E) entityBanco.get();
         }else{
             throw  new EntityNotFoundException();
         }
@@ -29,10 +39,13 @@ implements IGenericService<E>{
         return (E) this.repository.save(e);
     }
 
+
     @Override
-    public E update(E e, Long id) {
-        Optional<E> clienteBanco = repository.findById(id);
-        if (clienteBanco.isPresent()){
+    public E update(E updatedEntity, Long id) {
+        Optional<E> entity = repository.findById(id);
+        if (entity.isPresent()){
+            E e = entity.get();
+            e.partialUpdate(updatedEntity);
             return (E) this.repository.save(e);
         }else{
             throw  new EntityNotFoundException();
