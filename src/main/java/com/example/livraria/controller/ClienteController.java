@@ -25,12 +25,9 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente.DtoResponse create(@RequestBody Cliente.DtoRequest p){
-
         Cliente cliente = this.service.create(Cliente.DtoRequest.convertToEntity(p, mapper));
-
         Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(cliente, mapper);
         response.generateLinks(cliente.getId());
-
         return response;
     }
 
@@ -50,12 +47,15 @@ public class ClienteController {
         Cliente cliente = this.service.getById(id);
         Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(cliente, mapper);
         response.generateLinks(cliente.getId());
-
         return response;
     }
+
     @PutMapping("{id}")
-    public Cliente update(@RequestBody Cliente c, @PathVariable Long id){
-        return this.service.update(c, id);
+    public Cliente.DtoResponse update(@RequestBody Cliente.DtoRequest dtoRequest, @PathVariable Long id){
+        Cliente c = Cliente.DtoRequest.convertToEntity(dtoRequest, mapper);
+        Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(this.service.update(c, id), mapper);
+        response.generateLinks(id);
+        return response;
     }
 
     @DeleteMapping("{id}")

@@ -53,10 +53,12 @@ public class PedidoController {
         return response;
     }
     @PutMapping("{id}")
-    public Pedido update(@RequestBody Pedido p, @PathVariable Long id){
-        return this.service.update(p, id);
+    public Pedido.DtoResponse update(@RequestBody Pedido.DtoRequest dtoRequest, @PathVariable Long id){
+        Pedido p = Pedido.DtoRequest.convertToEntity(dtoRequest, mapper);
+        Pedido.DtoResponse response = Pedido.DtoResponse.convertToDto(this.service.update(p,id), mapper);
+        response.generateLinks(id);
+        return response;
     }
-
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){
         this.service.delete(id);

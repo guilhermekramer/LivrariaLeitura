@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import com.example.livraria.domain.Livro;
 import com.example.livraria.repository.LivroRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,5 +17,11 @@ public class LivroService extends GenericService<Livro, LivroRepository>  {
     @Override
     public List<Livro> list() {
         return super.list();
+    }
+
+    @Override
+    public Livro create(Livro livro) {
+        livro.setCreatedAt(LocalDateTime.now());
+        return super.create(livro);
     }
 }

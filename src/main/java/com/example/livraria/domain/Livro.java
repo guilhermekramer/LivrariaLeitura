@@ -12,7 +12,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
+
+import java.io.Serializable;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 
 
 @EqualsAndHashCode(callSuper = true)
