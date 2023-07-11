@@ -16,7 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 
 import java.io.Serializable;
-import java.util.List;
+
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -30,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Where(clause = "deleted_at is null")
 public class Cliente extends AbstractEntity implements Serializable {
 
-
+    //aa
     String nome;
     Integer idade;
     String cpf;
@@ -67,6 +67,7 @@ public class Cliente extends AbstractEntity implements Serializable {
         @Email
         String email;
         Endereco endereco;
+
 
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
             return mapper.map(dto, Cliente.class);
