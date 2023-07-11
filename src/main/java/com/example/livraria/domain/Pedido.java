@@ -39,10 +39,15 @@ public class Pedido extends AbstractEntity {
 
     @Data
     public static class DtoRequest{
-        @NotNull
-        List<Livro> livros;
-        @NotNull
-        Cliente cliente;
+
+        Long clienteId;
+        List<Long> livros;
+
+
+
+
+//        @NotNull
+//        Cliente cliente;
         public static Pedido convertToEntity(DtoRequest dto, @NotNull ModelMapper mapper ){
             return mapper.map(dto, Pedido.class);
         }
