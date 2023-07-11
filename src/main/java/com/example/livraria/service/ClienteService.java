@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
 
 @Service
 public class ClienteService extends GenericService<Cliente, ClienteRepository>  {
+
     public ClienteService(ClienteRepository repository) {
         super(repository);
     }
 
-    @Override
-    public Cliente create(Cliente cliente) {
-        cliente.setCreatedAt(LocalDateTime.now());
-        return super.create(cliente);
-    }
+//    @Override
+//    public Cliente create(Cliente cliente) {
+//        cliente.setCreatedAt(LocalDateTime.now());
+//        return super.create(cliente);
+//    }
 }

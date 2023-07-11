@@ -31,6 +31,8 @@ public class Livro extends AbstractEntity {
     Integer valor;
     String genero;
 
+    @ManyToMany(mappedBy = "livros")
+    List<Pedido> pedidos = new ArrayList<>();
 
     //Classe que manipula o DTO Request
     //Método que converte DTO em Livro
@@ -44,6 +46,8 @@ public class Livro extends AbstractEntity {
         @NotNull(message = "É necessário inserir um valor para o Livro")
         Integer valor;
         String genero;
+
+
 
 
         public static Livro convertToEntity (DtoRequest dto, ModelMapper mapper){

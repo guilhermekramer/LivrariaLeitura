@@ -17,7 +17,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+//@SQLDelete(sql = "UPDATE endereco SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+//@Where(clause = "deleted_at is null")
+//@SQLInsert(sql = "INSERT INTO endereco (created_at) VALUES (CURRENT_TIMESTAMP)")
+//@SQLUpdate(sql = "UPDATE endereco SET atualizado_at")
+//@Table( name = "endereco")
 public class Endereco extends AbstractEntity implements Serializable {
     String bairro;
     String rua;

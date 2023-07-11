@@ -13,15 +13,11 @@ public class LivroService extends GenericService<Livro, LivroRepository>  {
     public LivroService(LivroRepository repository) {
         super(repository);
     }
+//
+//    @Override
+//    public List<Livro> list() {
+//        return super.list();
+//    }
 
-    @Override
-    public List<Livro> list() {
-        return super.list();
-    }
 
-    @Override
-    public Livro create(Livro livro) {
-        livro.setCreatedAt(LocalDateTime.now());
-        return super.create(livro);
-    }
 }

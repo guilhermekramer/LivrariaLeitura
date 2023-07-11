@@ -36,13 +36,20 @@ public class Cliente extends AbstractEntity implements Serializable {
     String cpf;
     String email;
     Boolean admin = false;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "fk_endereco")
     Endereco endereco;
-    @OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true, cascade = {CascadeType.ALL})
     List<Pedido> pedidos;
 
-
+    public void addPedido(Pedido novoPedido){
+        pedidos.add(novoPedido);
+        novoPedido.setCliente(this);
+    }
+    public void removePedido(Pedido removePedido){
+        pedidos.remove(removePedido);
+        removePedido.setCliente(null);
+    }
 
     //Classe Que manipula o objeto DTORequest
     //Método que converte DTO em Cliente

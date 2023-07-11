@@ -1,20 +1,20 @@
 package com.example.livraria.domain;
 
 
-import com.example.livraria.controller.ClienteController;
+
+import com.example.livraria.controller.PedidoController;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
 
-import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -26,10 +26,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 public class Pedido extends AbstractEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "livro_pedido", joinColumns = { @JoinColumn(name = "pedido_id", referencedColumnName = "id") },
-    inverseJoinColumns = {@JoinColumn(name = "livro_id") })
-    List<Livro> livros;
+    inverseJoinColumns = {@JoinColumn(name = "livro_id", referencedColumnName = "id") })
+    List<Livro> livros = new ArrayList<>();
+
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     Cliente cliente;
@@ -56,9 +58,9 @@ public class Pedido extends AbstractEntity {
         }
 
         public void generateLinks(Long id){
-            add(linkTo(ClienteController.class).slash(id).withSelfRel());
-            add(linkTo(ClienteController.class).withRel("pedido"));
-            add(linkTo(ClienteController.class).slash(id).withRel("delete"));
+            add(linkTo(PedidoController.class).slash(id).withSelfRel());
+            add(linkTo(PedidoController.class).withRel("pedido"));
+            add(linkTo(PedidoController.class).slash(id).withRel("delete"));
         }
     }
 }
