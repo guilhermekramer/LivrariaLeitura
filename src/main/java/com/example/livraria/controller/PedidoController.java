@@ -24,9 +24,7 @@ public class PedidoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Pedido.DtoResponse create(@RequestBody Pedido.DtoRequest p){
-
         Pedido pedido = this.service.create(Pedido.DtoRequest.convertToEntity(p, mapper));
-
         Pedido.DtoResponse response = Pedido.DtoResponse.convertToDto(pedido, mapper);
         response.generateLinks(pedido.getId());
 
