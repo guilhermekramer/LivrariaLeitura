@@ -16,7 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 
 import java.io.Serializable;
-import java.util.List;
+
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -30,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Where(clause = "deleted_at is null")
 public class Cliente extends AbstractEntity implements Serializable {
 
-
+    //aa
     String nome;
     Integer idade;
     String cpf;
@@ -39,9 +39,11 @@ public class Cliente extends AbstractEntity implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "fk_endereco")
     Endereco endereco;
-    @OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true, cascade = {CascadeType.ALL})
-    List<Pedido> pedidos;
 
+    //@OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true, cascade = {CascadeType.ALL})
+    //List<Pedido> pedidos;
+
+    /*
     public void addPedido(Pedido novoPedido){
         pedidos.add(novoPedido);
         novoPedido.setCliente(this);
@@ -49,7 +51,7 @@ public class Cliente extends AbstractEntity implements Serializable {
     public void removePedido(Pedido removePedido){
         pedidos.remove(removePedido);
         removePedido.setCliente(null);
-    }
+    }*/
 
     //Classe Que manipula o objeto DTORequest
     //Método que converte DTO em Cliente
@@ -65,8 +67,6 @@ public class Cliente extends AbstractEntity implements Serializable {
         @Email
         String email;
         Endereco endereco;
-        List<Pedido> pedidos;
-
 
 
         public static Cliente convertToEntity(DtoRequest dto, ModelMapper mapper){
@@ -87,7 +87,7 @@ public class Cliente extends AbstractEntity implements Serializable {
         String cpf;
         String email;
         Endereco endereco;
-        List<Pedido> pedidos;
+
 
         public static DtoResponse convertToDto(Cliente c, ModelMapper mapper){
             return mapper.map(c, DtoResponse.class);
@@ -99,7 +99,6 @@ public class Cliente extends AbstractEntity implements Serializable {
             add(linkTo(ClienteController.class).slash(id).withRel("delete"));
         }
     }
-
 
 }
 
