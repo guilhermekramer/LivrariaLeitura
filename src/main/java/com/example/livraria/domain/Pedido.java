@@ -38,7 +38,7 @@ public class Pedido extends AbstractEntity {
 
 
     @Data
-    public class DtoRequest{
+    public static class DtoRequest{
         @NotNull
         List<Livro> livros;
         @NotNull
@@ -48,7 +48,7 @@ public class Pedido extends AbstractEntity {
         }
     }
     @Data
-    public class DtoResponse extends RepresentationModel<Pedido.DtoResponse>{
+    public static class  DtoResponse extends RepresentationModel<Pedido.DtoResponse>{
         List<Livro> livros;
         Cliente cliente;
 
