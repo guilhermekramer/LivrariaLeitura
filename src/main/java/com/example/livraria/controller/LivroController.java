@@ -61,8 +61,12 @@ public class LivroController {
 
 
     @PutMapping("{id}")
-    public Livro update(@RequestBody Livro l, @PathVariable Long id){
-        return this.service.update(l, id);
+    public Livro.DtoResponse update(@RequestBody Livro.DtoRequest dtoRequest, @PathVariable Long id){
+        Livro livro = Livro.DtoRequest.convertToEntity(dtoRequest, mapper);
+        Livro.DtoResponse response = Livro.DtoResponse.convertToDto(this.service.update(livro, id), mapper);
+        response.generateLinks(id);
+        return response;
+
     }
 
     @DeleteMapping("{id}")

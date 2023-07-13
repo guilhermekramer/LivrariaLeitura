@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import com.example.livraria.domain.AbstractEntity;
 import com.example.livraria.repository.IGenericRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 public abstract class GenericService<E extends AbstractEntity, R extends IGenericRepository> implements IGenericService<E>{
@@ -36,6 +37,7 @@ public abstract class GenericService<E extends AbstractEntity, R extends IGeneri
 
     @Override
     public E create(E e) {
+        e.setCreatedAt(LocalDateTime.now());
         return (E) this.repository.save(e);
     }
 
@@ -46,6 +48,7 @@ public abstract class GenericService<E extends AbstractEntity, R extends IGeneri
         if (entity.isPresent()){
             E e = entity.get();
             e.partialUpdate(updatedEntity);
+            e.setAtualizadoAt(LocalDateTime.now());
             return (E) this.repository.save(e);
         }else{
             throw  new EntityNotFoundException();
@@ -54,6 +57,7 @@ public abstract class GenericService<E extends AbstractEntity, R extends IGeneri
 
     @Override
     public void delete(Long id) {
+
         this.repository.deleteById(id);
     }
 

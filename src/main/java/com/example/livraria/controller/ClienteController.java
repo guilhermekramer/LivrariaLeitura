@@ -1,5 +1,6 @@
 package com.example.livraria.controller;
 
+import com.example.livraria.service.EnderecoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class ClienteController {
 
     ClienteService service;
+
     ModelMapper mapper;
 
     public ClienteController(ClienteService service, ModelMapper mapper) {
@@ -24,8 +26,8 @@ public class ClienteController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente.DtoResponse create(@RequestBody Cliente.DtoRequest p){
-        Cliente cliente = this.service.create(Cliente.DtoRequest.convertToEntity(p, mapper));
+    public Cliente.DtoResponse create(@RequestBody Cliente.DtoRequest c){
+        Cliente cliente = this.service.create(Cliente.DtoRequest.convertToEntity(c, mapper));
         Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(cliente, mapper);
         response.generateLinks(cliente.getId());
         return response;

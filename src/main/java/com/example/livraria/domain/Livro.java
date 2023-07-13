@@ -3,6 +3,7 @@ package com.example.livraria.domain;
 import com.example.livraria.controller.LivroController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -31,6 +34,8 @@ public class Livro extends AbstractEntity {
     Integer valor;
     String genero;
 
+    //@ManyToMany(mappedBy = "livros")
+    //List<Pedido> pedidos = new ArrayList<>();
 
     //Classe que manipula o DTO Request
     //Método que converte DTO em Livro
@@ -44,6 +49,8 @@ public class Livro extends AbstractEntity {
         @NotNull(message = "É necessário inserir um valor para o Livro")
         Integer valor;
         String genero;
+
+
 
 
         public static Livro convertToEntity (DtoRequest dto, ModelMapper mapper){
