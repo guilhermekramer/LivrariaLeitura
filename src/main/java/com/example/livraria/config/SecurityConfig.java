@@ -29,6 +29,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+
     private final RsaKeyProperties rsaKeys;
 
     private static final String[] AUTH_WHITELIST = {
