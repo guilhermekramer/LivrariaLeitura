@@ -31,31 +31,30 @@ public class Pedido extends AbstractEntity {
     inverseJoinColumns = {@JoinColumn(name = "livro_id", referencedColumnName = "id") })
     List<Livro> livros = new ArrayList<>();
 
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     Cliente cliente;
+
 
 
     @Data
     public static class DtoRequest{
 
         Long clienteId;
-        List<Long> livros;
+        List<Long> livrosId;
 
-
-
-
-//        @NotNull
-//        Cliente cliente;
-        public static Pedido convertToEntity(DtoRequest dto, @NotNull ModelMapper mapper ){
+        public static Pedido convertToEntity(DtoRequest dto, ModelMapper mapper ){
             return mapper.map(dto, Pedido.class);
         }
     }
+
+
+
+
     @Data
     public static class  DtoResponse extends RepresentationModel<Pedido.DtoResponse>{
-        List<Livro> livros;
-        Cliente cliente;
+        Long clienteId;
+        List<Livro.DtoResponse> livros;
 
         public static DtoResponse convertToDto(Pedido p, ModelMapper mapper){
             return mapper.map(p, DtoResponse.class);

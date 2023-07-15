@@ -8,6 +8,7 @@ import com.example.livraria.repository.ClienteRepository;
 import com.example.livraria.repository.LivroRepository;
 import com.example.livraria.repository.PedidoRepository;
 import com.example.livraria.service.PedidoService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedido")
@@ -27,46 +30,34 @@ public class PedidoController {
 
     LivroRepository livroRepository;
 
-    PedidoRepository pedidoRepository;
 
-    public PedidoController(PedidoService service, ModelMapper mapper, ClienteRepository clienteRepository, LivroRepository livroRepository, PedidoRepository pedidoRepository) {
+    public PedidoController(PedidoService service, ModelMapper mapper,  ClienteRepository clienteRepository, LivroRepository livroRepository) {
         this.service = service;
         this.mapper = mapper;
         this.clienteRepository = clienteRepository;
         this.livroRepository = livroRepository;
-        this.pedidoRepository = pedidoRepository;
+
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestBody Pedido p){
+    public Pedido.DtoResponse create(@RequestBody @Valid Pedido.DtoRequest p){
 
-        System.out.println(p.toString());
-        System.out.println(p.getCliente().toString());
+        Optional<Cliente> clienteOptional = clienteRepository.findById(p.getClienteId());
+        List<Livro> livros = livroRepository.findAllById(p.getLivrosId());
+        Pedido ped = new Pedido();
+        ped.setLivros(livros);
+        ped.setCliente(clienteOptional.get());
+        Pedido pedido = this.service.create(ped);
 
-        Cliente c = clienteRepository.findById(p.getCliente().getId()).get();
-
-        System.out.println(c.toString());
-        p.setCliente(c);
-        System.out.println(p.toString());
-
-        Livro l = livroRepository.findById(p.getLivros().get(0).getId()).get();
-
-        List<Livro> livros = new ArrayList<>();
-
-        livros.add(l);
-
-        p.setLivros(livros);
-
-        pedidoRepository.save(p);
+        Pedido.DtoResponse response = Pedido.DtoResponse.convertToDto(pedido, mapper);
 
 
-        //Pedido pedido = this.service.create(Pedido.DtoRequest.convertToEntity(p, mapper));
-        //Pedido.DtoResponse response = Pedido.DtoResponse.convertToDto(pedido, mapper);
+        response.generateLinks(pedido.getId());
 
-        //response.generateLinks(pedido.getId());
-
-        return "new Pedido.DtoResponse()";
+        return response;
     }
+
+
 
     @GetMapping
     public List<Pedido.DtoResponse> list(){
