@@ -40,8 +40,6 @@ public class Cliente extends AbstractEntity implements Serializable {
     @JoinColumn(name = "fk_endereco")
     Endereco endereco;
 
-    //@OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, orphanRemoval=true, cascade = {CascadeType.ALL})
-    //List<Pedido> pedidos;
 
     /*
     public void addPedido(Pedido novoPedido){
@@ -58,6 +56,7 @@ public class Cliente extends AbstractEntity implements Serializable {
 
     @Data
     public static class DtoRequest {
+        Long id;
         @NotBlank(message = "É necessário inserir um nome para o Cliente")
         String nome;
         @NotNull(message = "É necessário inserir uma idade para o Cliente")
@@ -81,7 +80,7 @@ public class Cliente extends AbstractEntity implements Serializable {
 
     @Data
     public static class DtoResponse extends RepresentationModel<DtoResponse> {
-
+        Long id;
         String nome;
         Integer idade;
         String cpf;

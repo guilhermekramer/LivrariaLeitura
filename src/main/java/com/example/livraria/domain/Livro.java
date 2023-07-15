@@ -28,6 +28,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Livro extends AbstractEntity {
+    Long id;
     String nome;
     String autor;
     Integer anoCriacao;
@@ -41,6 +42,7 @@ public class Livro extends AbstractEntity {
     //Método que converte DTO em Livro
     @Data
     public static class DtoRequest {
+        Long id;
         @NotBlank(message = "É necessário inserir um nome para o Livro")
         String nome;
         @NotBlank(message = "É necessário inserir um autor para o Livro")
@@ -64,7 +66,7 @@ public class Livro extends AbstractEntity {
     //Método que converte Livro em DTO
     @Data
     public static class DtoResponse extends RepresentationModel<DtoResponse> {
-
+        Long id;
         String nome;
         String autor;
         Integer anoCriacao;
