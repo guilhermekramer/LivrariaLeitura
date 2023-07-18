@@ -39,8 +39,16 @@ public class Livro extends AbstractEntity {
     Integer valor;
     String genero;
 
-    //@ManyToMany(mappedBy = "livros")
-    //List<Pedido> pedidos = new ArrayList<>();
+    public void partialUpdate(AbstractEntity e) {
+        if (e instanceof Livro livro) {
+            this.nome = livro.nome;
+            this.autor = livro.autor;
+            this.anoCriacao = livro.anoCriacao;
+            this.valor = livro.valor;
+            this.genero = livro.genero;
+        }
+    }
+
 
     //Classe que manipula o DTO Request
     //Método que converte DTO em Livro

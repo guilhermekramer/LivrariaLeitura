@@ -29,6 +29,15 @@ public class Endereco extends AbstractEntity implements Serializable {
     String rua;
     Integer numero;
 
+
+    @Override
+    public void partialUpdate(AbstractEntity e) {
+        if (e instanceof Endereco endereco){
+            this.bairro = endereco.bairro;
+            this.rua = endereco.rua;
+            this.numero = endereco.numero;
+        }
+    }
 //    @Data
 //    public static class DtoRequest {
 //        @NotBlank(message = "É necessário inserir um bairro")
