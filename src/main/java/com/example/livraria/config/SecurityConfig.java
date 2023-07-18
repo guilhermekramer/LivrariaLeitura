@@ -44,7 +44,9 @@ public class SecurityConfig {
             "/api/public/authenticate",
             "/actuator/*",
             "/swagger-ui/**",
-            "/token"
+            "/token",
+            "/livro/**",
+            "/livro/"
     };
 
     public SecurityConfig(RsaKeyProperties rsaKeys) {
