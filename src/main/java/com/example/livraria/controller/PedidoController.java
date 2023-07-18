@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedido")
+
 public class PedidoController {
 
     PedidoService service;

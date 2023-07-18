@@ -8,6 +8,7 @@ import com.example.livraria.domain.Cliente;
 import com.example.livraria.service.ClienteService;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -20,9 +21,11 @@ public class ClienteController {
 
     ModelMapper mapper;
 
+
     public ClienteController(ClienteService service, ModelMapper mapper) {
         this.service = service;
         this.mapper = mapper;
+
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,6 +33,7 @@ public class ClienteController {
         Cliente cliente = this.service.create(Cliente.DtoRequest.convertToEntity(c, mapper));
         Cliente.DtoResponse response = Cliente.DtoResponse.convertToDto(cliente, mapper);
         response.generateLinks(cliente.getId());
+
         return response;
     }
 

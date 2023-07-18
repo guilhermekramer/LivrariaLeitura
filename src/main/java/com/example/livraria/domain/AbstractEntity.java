@@ -26,6 +26,5 @@ public abstract class AbstractEntity {
     LocalDateTime atualizadoAt;
 
 
-    public <E extends AbstractEntity> void partialUpdate(E updatedEntity) {
-    }
+    public abstract void partialUpdate(AbstractEntity e);
 }

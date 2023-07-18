@@ -15,9 +15,11 @@ public class ClienteService extends GenericService<Cliente, ClienteRepository>  
         super(repository);
     }
 
-//    @Override
-//    public Cliente create(Cliente cliente) {
-//        cliente.setCreatedAt(LocalDateTime.now());
-//        return super.create(cliente);
-//    }
+    @Override
+    public Cliente create(Cliente cliente) {
+        cliente.getEndereco().setCreatedAt(LocalDateTime.now());
+        return super.create(cliente);
+    }
+
+
 }

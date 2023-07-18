@@ -40,23 +40,21 @@ public class Cliente extends AbstractEntity implements Serializable {
     @JoinColumn(name = "fk_endereco")
     Endereco endereco;
 
-
-    /*
-    public void addPedido(Pedido novoPedido){
-        pedidos.add(novoPedido);
-        novoPedido.setCliente(this);
+    @Override
+    public void partialUpdate(AbstractEntity e) {
+        if (e instanceof Cliente cliente){
+            this.nome = cliente.nome;
+            this.idade = cliente.idade;
+            this.cpf = cliente.cpf;
+            this.email = cliente.email;
+            this.admin = cliente.admin;
+            this.endereco = cliente.endereco;
+        }
     }
-    public void removePedido(Pedido removePedido){
-        pedidos.remove(removePedido);
-        removePedido.setCliente(null);
-    }*/
 
-    //Classe Que manipula o objeto DTORequest
-    //Método que converte DTO em Cliente
 
     @Data
     public static class DtoRequest {
-        Long id;
         @NotBlank(message = "É necessário inserir um nome para o Cliente")
         String nome;
         @NotNull(message = "É necessário inserir uma idade para o Cliente")
