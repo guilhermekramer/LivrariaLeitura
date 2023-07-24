@@ -41,7 +41,8 @@ public abstract class GenericService<E extends AbstractEntity, R extends IGeneri
             E e = entity.get();
             e.partialUpdate(updatedEntity);
             e.setAtualizadoAt(LocalDateTime.now());
-            return (E) this.repository.save(e);
+            E save = (E) this.repository.save(e);
+            return save;
         }else{
             throw  new EntityNotFoundException();
         }

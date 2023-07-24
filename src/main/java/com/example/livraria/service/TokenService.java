@@ -1,5 +1,6 @@
 package com.example.livraria.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class TokenService {
 
+
     private final JwtEncoder encoder;
 
     public TokenService(JwtEncoder encoder) {
+
         this.encoder = encoder;
     }
 

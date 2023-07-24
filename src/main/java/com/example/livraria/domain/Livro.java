@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -27,6 +29,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE livro SET deleted_At = CURRENT_TIMESTAMP WHERE id=?")
+@Where(clause = "deleted_at is null")
 public class Livro extends AbstractEntity {
     Long id;
     String nome;
@@ -35,8 +39,16 @@ public class Livro extends AbstractEntity {
     Integer valor;
     String genero;
 
-    //@ManyToMany(mappedBy = "livros")
-    //List<Pedido> pedidos = new ArrayList<>();
+    public void partialUpdate(AbstractEntity e) {
+        if (e instanceof Livro livro) {
+            this.nome = livro.nome;
+            this.autor = livro.autor;
+            this.anoCriacao = livro.anoCriacao;
+            this.valor = livro.valor;
+            this.genero = livro.genero;
+        }
+    }
+
 
     //Classe que manipula o DTO Request
     //Método que converte DTO em Livro

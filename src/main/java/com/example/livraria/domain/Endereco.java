@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 
 import java.io.Serializable;
@@ -19,16 +21,23 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@SQLDelete(sql = "UPDATE endereco SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
-//@Where(clause = "deleted_at is null")
-//@SQLInsert(sql = "INSERT INTO endereco (created_at) VALUES (CURRENT_TIMESTAMP)")
-//@SQLUpdate(sql = "UPDATE endereco SET atualizado_at")
-//@Table( name = "endereco")
+@SQLDelete(sql = "UPDATE endereco SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+@Where(clause = "deleted_at is null")
+
 public class Endereco extends AbstractEntity implements Serializable {
     String bairro;
     String rua;
     Integer numero;
 
+
+    @Override
+    public void partialUpdate(AbstractEntity e) {
+        if (e instanceof Endereco endereco){
+            this.bairro = endereco.bairro;
+            this.rua = endereco.rua;
+            this.numero = endereco.numero;
+        }
+    }
 //    @Data
 //    public static class DtoRequest {
 //        @NotBlank(message = "É necessário inserir um bairro")

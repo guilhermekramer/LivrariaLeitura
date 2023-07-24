@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -24,6 +26,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE pedido SET deleted_At = CURRENT_TIMESTAMP WHERE id=?")
+@Where(clause = "deleted_at is null")
 public class Pedido extends AbstractEntity {
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -35,11 +39,15 @@ public class Pedido extends AbstractEntity {
     @JoinColumn(name = "cliente_id")
     Cliente cliente;
 
+    @Override
+    public void partialUpdate(AbstractEntity e) {
+
+    }
 
 
     @Data
     public static class DtoRequest{
-
+        Long id;
         Long clienteId;
         List<Long> livrosId;
 
@@ -53,6 +61,7 @@ public class Pedido extends AbstractEntity {
 
     @Data
     public static class  DtoResponse extends RepresentationModel<Pedido.DtoResponse>{
+        long id;
         Long clienteId;
         List<Livro.DtoResponse> livros;
 
